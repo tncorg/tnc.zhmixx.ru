@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>тапать кота</title>
+    <link rel="stylesheet" href="https://files.zhmixx.ru/css/tnc.zhmixx.ru/cclck.css"
+</head>
+<body>
+    <div class="container">
+        <h1>тапать кота</h1>
+
+        <img id="cat" src="/images/cat-breakdance.gif" alt="Кот" onclick="clickCat()">
+        <div id="statsSection">
+            <h2>статистика</h2>
+            <div class="content">
+                <p>деньги: <span id="scoreValue">0</span></p>
+                <p>опыт: <span id="xpValue">0</span></p>
+                <p>уровень перерождения: <span id="rebirthLevel">0</span></p>
+                <p id="petBonus">текущий питомец: нет</p>
+                <p>бонус комбо: <span id="comboBonus">0</span>x</p>
+            </div>
+        </div>
+
+        <div class="section" id="upgradesSection">
+            <h2 onclick="toggleSection('upgradesSection')">улучшения</h2>
+            <div class="content">
+                <h3>улучшения клика</h3>
+                <p id="clickValue">каждый клик приносит: 1</p>
+                <button class="button" onclick="buyClickUpgrade()">улучшение клика (цена: <span id="clickUpgradeCost">100</span>)</button>
+
+                <h3>автокликер</h3>
+                <p id="autoClickerStatus">автокликер: выключен</p>
+                <button class="button" onclick="buyAutoClicker()">купить автокликер (цена: <span id="autoClickerCost">500</span>)</button>
+                <button class="button" onclick="upgradeAutoClicker()">улучшить автокликер (цена: <span id="autoClickerUpgradeCost">300</span>)</button>
+            </div>
+        </div>
+
+        <div class="section" id="rebirthSection">
+            <h2 onclick="toggleSection('rebirthSection')">перерождение</h2>
+            <div class="content">
+                <p>текущее перерождение дает бонус: <span id="rebirthBonus">0</span>%</p>
+                <button class="button" onclick="rebirth()">переродиться (нужно 80000 денег)</button>
+            </div>
+        </div>
+
+        <div class="section collapsed" id="achievementsSection">
+            <h2 onclick="toggleSection('achievementsSection')">достижения</h2>
+            <div class="content">
+                <p class="achievement" id="achievement1">миллионер: не получено</p>
+                <p class="achievement" id="achievement2">мастер улучшений: не получено</p>
+                <p class="achievement" id="achievement3">новое начало: не получено</p>
+                <p class="achievement" id="achievement4">король комбо: не получено</p>
+                <p class="achievement" id="achievement5">ветеран: не получено</p>
+                <p class="achievement" id="achievement6">автоматизатор: не получено</p>
+            </div>
+        </div>
+
+        <div class="section" id="saveLoadSection">
+            <h2 onclick="toggleSection('saveLoadSection')">сохранение / загрузка</h2>
+            <div class="content">
+                <button class="button" onclick="saveGame()">💾 сохранить (локально)</button>
+                <button class="button" onclick="exportSave()">📤 экспортировать сохранение</button>
+                <button class="button" onclick="importSave()">📥 импортировать сохранение</button>
+                <button class="button" onclick="resetGame()">🗑 сбросить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://files.zhmixx.ru/cclck.js"></script>
+</body>
+</html>
