@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>slot machine</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .slot {
+      font-size: 2rem;
+    }
+    .message {
+      margin: 10px;
+      font-weight: bold;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>welcome to js_ut!</h1>
+  <p>spin cost: 1c | final wallet shown on quit</p>
+  <div class="slot" id="slots">--</div>
+  <div class="message" id="result">press spin to play.</div>
+  <div class="message" id="wallet">wallet: 5c</div>
+  <button onclick="spin()">spin</button>
+  <button onclick="quitGame()">quit</button>
+
+  <script>
+    const symbolEmoji = {
+      cherry: "🍒",
+      ghost: "👻",
+      bone: "🦴",
+      "7": "7",
+      dog: "🐶"
+    };
+
+    const reel1 = [
+      ...Array(3).fill("cherry"),
+      ...Array(3).fill("ghost"),
+      ...Array(2).fill("bone"),
+      "7",
+      "dog"
+    ];
+    const reel2 = [
+      ...Array(4).fill("cherry"),
+      ...Array(2).fill("ghost"),
+      ...Array(2).fill("bone"),
+      "7",
+      "dog"
+    ];
+    const reel3 = [
+      ...Array(2).fill("cherry"),
+      ...Array(3).fill("ghost"),
+      ...Array(3).fill("bone"),
+      "7",
+      "dog"
+    ];
+
+    const nonCherryPayouts = {
+      ghost: 20,
+      bone: 30,
+      "7": 7,
+      dog: 150
+    };
+
+    let wallet = 5;
+    const spinCost = 1;
+    let prevSpin = ["", "", ""];
+    let gameOver = false;
+
+    function randomChoice(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function updateUI(message, jackpot = false) {
+      document.getElementById("wallet").innerText = `wallet: ${wallet}c`;
+      document.getElementById("result").innerText = message;
+      if (gameOver) {
+        document.querySelector("button[onclick='spin()']").disabled = true;
+      }
+    }
+
+    function spin() {
+      if (wallet < spinCost || gameOver) return;
+
+      wallet -= spinCost;
+      const sa = randomChoice(reel1);
+      const sb = randomChoice(reel2);
+      const sc = randomChoice(reel3);
+      const symbols = [sa, sb, sc];
+
+      document.getElementById("slots").innerText =
+        `${symbolEmoji[sa]} ${symbolEmoji[sb]} ${symbolEmoji[sc]}`;
+
+      const counts = {};
+      symbols.forEach(s => counts[s] = (counts[s] || 0) + 1);
+
+      let coins = 0;
+      let jackpot = false;
+      let nearBonus = false;
+      let ikariBonus = false;
+
+      // cherry payout
+      const cherryCount = counts["cherry"] || 0;
+      if (cherryCount === 1) coins = 2;
+      else if (cherryCount === 2) coins = 5;
+      else if (cherryCount === 3) coins = 10;
+
+      // non-cherry 3-match payout
+      for (const [symbol, payout] of Object.entries(nonCherryPayouts)) {
+        if (counts[symbol] === 3) {
+          coins = payout;
+          if (["7", "dog"].includes(symbol)) jackpot = true;
+        }
+      }
+
+      // near bonus
+      ["7", "dog"].forEach(sym => {
+        if (counts[sym] === 2 && !counts["cherry"]) {
+          nearBonus = true;
+          coins = Math.max(coins, 1);
+        }
+      });
+
+      // ikari bonus
+      if (prevSpin[0] === "dog" && prevSpin[1] === "dog" && prevSpin[2] !== "dog") {
+        if (sa === "dog" && sb === "dog" && sc !== "dog") {
+          ikariBonus = true;
+          coins += 20;
+        }
+      }
+
+      wallet += coins;
+
+      let message = "";
+      if (jackpot) message += "jackpot!\n";
+      if (ikariBonus) message += "ikari bonus! +20c\n";
+      if (nearBonus) message += "near bonus! +1c refund\n";
+      if (coins > 0) {
+        message += `you won ${coins}c.`;
+      } else {
+        message += "no win.";
+      }
+
+      updateUI(message.trim());
+      prevSpin = symbols;
+
+      if (wallet < spinCost) {
+        gameOver = true;
+        updateUI(`game over.`);
+      }
+    }
+
+    function quitGame() {
+      gameOver = true;
+      updateUI(`final wallet: ${wallet}c.`);
+    }
+  </script>
+</body>
+</html>
