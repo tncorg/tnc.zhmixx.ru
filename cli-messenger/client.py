@@ -2,7 +2,7 @@ import socket
 import threading
 import sys
 
-HOST = '127.0.0.1'
+HOST = '127.0.0.1' # CHANGE THIS!!!
 PORT = 5000
 
 nickname = input("enter your nickname: ")
