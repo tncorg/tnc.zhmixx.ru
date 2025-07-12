@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Зрада Пошук</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 15%;
+      background: #fff;
+    }
+
+    h1 {
+      font-size: 64px;
+      font-weight: normal;
+    }
+
+    .logo {
+      font-size: 64px;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .logo span:nth-child(1) { color: #4285F4; }
+    .logo span:nth-child(2) { color: #DB4437; }
+    .logo span:nth-child(3) { color: #F4B400; }
+    .logo span:nth-child(4) { color: #4285F4; }
+    .logo span:nth-child(5) { color: #0F9D58; }
+    .logo span:nth-child(6) { color: #DB4437; }
+    .logo span:nth-child(7) { color: #F4B400; }
+
+    input[type="text"] {
+      width: 50%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #dcdcdc;
+      border-radius: 24px;
+      outline: none;
+    }
+
+    input[type="submit"] {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color: #f8f9fa;
+      border: 1px solid #dcdcdc;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #f1f1f1;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <span>З</span><span>р</span><span>а</span><span>д</span><span>а</span> <span>П</span><span>о</span><span>ш</span><span>у</span><span>к</span>
+  </div>
+  <form id="searchForm">
+    <input type="text" id="searchInput" placeholder="Пошук Зради..." />
+    <br>
+    <input type="submit" value="Пошук Зради">
+  </form>
+
+  <div class="footer">© 2025 Зрада Пошук</div>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const query = document.getElementById('searchInput').value.toLowerCase();
+
+    const durovKeywords = [
+      "дуров",
+      "durov",
+      "павел дуров",
+      "паша дуров",
+      "paul durov",
+      "дурво",
+      "др дурова",
+      "день рождения дурова",
+      "когда родился дуров",
+      "кто такой дуров",
+      "telegram founder",
+      "основатель telegram",
+      "основатель телеграм",
+      "durov's birthday",
+      "when was durov born",
+      "birthday of durov",
+      "founder of telegram",
+      "павло дуров",
+      "дуров день рождения",
+      "день рождения павла дурова"
+    ];
+
+      const matched = durovKeywords.some(keyword => query.includes(keyword.toLowerCase()));
+
+      if (matched) {
+        window.location.href = "durov.html";
+      } else {
+        alert("Результатів не знайдено. Зрада не виявлена.");
+      }
+    });
+  </script>
+</body>
+</html>
